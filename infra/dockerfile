@@ -1,0 +1,11 @@
+FROM node:13
+
+WORKDIR /usr/infra
+
+RUN yarn  
+
+COPY . .
+
+COPY package.json /usr/infra 
+
+CMD ["yarn","start"]

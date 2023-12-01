@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  node-app:
+    image: nub
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    networks:
+      - rede
+    ports:
+      - "3001:3001"
+    command: sh -c "npm install && node server.js"
+    restart: always
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: localhost
+    networks:
+      - rede
+    ports:
+      - "5432:5432"
+    restart: always
+
+networks:
+  rede:
+    driver: bridge
